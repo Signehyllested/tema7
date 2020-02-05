@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01 select</title>
+    <link rel="stylesheet" href="">
+</head>
+
+<body>
+    <section id="content">
+        <div><a href="https://kea.dk">KEA.dk</a></div>
+        <div><a href="https://github.com/sign644g/tema7">Link til github</a></div>
+        <div><img src="http://mabe-kea.dk/E19/pics/frog.png" alt="billede af frø"></div>
+    </section>
+
+    <script>
+        document.querySelector("#content");
+        console.log(document.querySelector("#content"));
+        //       vælge den første elememt/div inde i content
+        console.log(document.querySelector("#content div"));
+
+        //       jason selector + for at få fat i næste div, osv
+        console.log(document.querySelector("#content div + div"));
+
+    </script>
+</body>
+
+</html>
