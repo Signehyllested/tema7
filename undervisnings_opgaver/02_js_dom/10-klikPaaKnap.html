@@ -34,7 +34,7 @@
     <button id="html">
         html
     </button>
-    <button id="slet">
+    <button id="flyt">
         flyt
     </button>
     <div id="box"></div>
@@ -55,6 +55,15 @@
 
             document.querySelector("#slet").addEventListener("click", () => {
                 box.style.transform = "scale(0)";
+            })
+
+            document.querySelector("#html").addEventListener("click", () => {
+                box.innerHTML = "<h2>En overskrift!</h2> <p>noget tekst</p>";
+            })
+
+            document.querySelector("#flyt").addEventListener("click", () => {
+                box.innerHTML = bax.innerHTML;
+
             })
 
         }
