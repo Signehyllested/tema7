@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>09 Array</title>
+    <title>09 Array med liste</title>
     <style>
         body {
             color: burlywood;
@@ -23,14 +23,19 @@
 
 <body>
 
-    <div id="display"></div>
+    <ul id="display"></ul>
 
     <script>
         let playlist = ["BOY BOYE", "Siger Ingenting", "Best to You", "Self Care", "Sunflower", "Sundress", "Mand Over Bord"];
 
         playlist.forEach(sang => {
-            document.querySelector("#display").innerHTML +=
-                `${sang} <br> `;
+            let element = document.createElement("li");
+            let mySong = document.createTextNode(sang);
+
+            element.appendChild(mySong);
+
+            document.querySelector("#display").appendChild(element);
+
         })
 
     </script>
