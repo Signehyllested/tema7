@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personliste opgave</title>
+
+    <style>
+        img {
+            width: 100%;
+            height: 60%;
+            object-fit: contain;
+        }
+
+
+        article {
+            border: 4px solid black;
+            margin: 2vw;
+
+            overflow: hidden;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+
+        #detalje {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, .5);
+            overflow: scroll;
+
+        }
+
+        #detalje_person {
+            background-color: white;
+            margin 2em 5em;
+
+        }
+
+        #luk {
+            margin: 1em;
+        }
+
+    </style>
+</head>
+
+<body>
+    <section id="detalje" class="skjul">
+        <button id="luk">X</button>
+        <article id="detalje_person">
+            <h3></h3>
+            <img src="" alt="">
+        </article>
+    </section>
+
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get("id");
+
+        const endpoint = "https://spreadsheets.google.com/feeds/list/1XWWbfWszD7f4jHqp51V_oT3pkHuR-ceEUw4YtrvK7F0/od6/public/values?alt=json";
+
+        let personer = [];
+
+        const detalje = document.querySelector("#detalje");
+
+        document.addEventListener("DOMContentLoaded", start)
+
+        function start() {
+            loadData();
+        }
+
+        async function loadData() {
+            const response = await fetch(endpoint);
+            console.log(response);
+            personer = await response.json();
+            console.log(personer);
+            visPersoner();
+        }
+
+        function visPersoner() {
+            personer.feed.entry.forEach(person => {
+                if (person.gsx$id.$t == id) {
+
+                    detalje.classList.remove("skjul");
+                    detalje.querySelector("button").addEventListener("click", () => detalje.classList.add("skjul"));
+
+                    detalje.querySelector("h3").textContent = person.gsx$navn.$t;
+                    detalje.querySelector("h3").textContent += "" + person.gsx$efternavn.$t;
+
+                    detalje.querySelector("#detalje_person img").src = person.gsx$billede.$t;
+                    detalje.querySelector("#detalje_person img").alt = `Portræt af ${person.gsx$navn.$t}`;
+
+                }
+            })
+
+            document.querySelector("#detalje #luk").addEventListener("click", (skjulDetalje));
+        }
+
+        function skjulDetalje() {
+            history.back();
+        }
+
+    </script>
+</body>
+
+</html>

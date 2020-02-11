@@ -8,21 +8,23 @@
 
     <style>
         img {
-            width: 100%;
+            width: 400px;
+            height: 400px;
+            object-fit: cover;
         }
 
 
         article {
-            border: 4px solid black;
+            border: 1px solid black;
             margin: 2vw;
-            padding: 1vw;
-        }
+            overflow: hidden;
 
+        }
 
         .data-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            grid-gap: 1em;
+            grid-gap: 5px;
             margin: 10px;
             max-width: 1200px;
         }
@@ -35,39 +37,11 @@
             text-align: center;
         }
 
-        .person {
-            cursor: pointer;
-        }
+        button {}
 
         .valgt {
             color: red;
         }
-
-        #detalje {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: rgba(0, 0, 0, .5);
-            overflow: scroll;
-
-        }
-
-        #detalje_person {
-            background-color: white;
-            margin 2em 5em;
-
-        }
-
-        #luk {
-            margin: 1em;
-        }
-
-        .skjul {
-            display: none;
-        }
-
     </style>
 </head>
 
@@ -99,23 +73,13 @@
         </article>
     </template>
 
-    <section id="detalje" class="skjul">
-        <button id="luk">X</button>
-        <article id="detalje_person">
-            <h3></h3>
-            <img src="" alt="">
-        </article>
-    </section>
-
 
     <script>
         const endpoint = "https://spreadsheets.google.com/feeds/list/1XWWbfWszD7f4jHqp51V_oT3pkHuR-ceEUw4YtrvK7F0/od6/public/values?alt=json";
 
         let personer = [];
 
-        let filter = "k";
-
-        let detalje = document.querySelector("#detalje");
+        let filter = "alle";
 
         document.addEventListener("DOMContentLoaded", start)
 
@@ -158,28 +122,14 @@
                     klon.querySelector("#job").textContent += person.gsx$job.$t;
                     klon.querySelector("#by").textContent += person.gsx$by.$t;
                     klon.querySelector("#cpr").textContent += person.gsx$rpc.$t;
-                    klon.querySelector(".person").addEventListener("click", () => visDetalje(person));
                     container.appendChild(klon);
+
+                    container.lastElementChild.addEventListener("click", () => {
+                        location.href = `detalje.html?id=${person.gsx$id.$t}`;
+                    })
                 }
             })
         }
-
-        function visDetalje(person) {
-
-
-            detalje.classList.remove("skjul");
-            detalje.querySelector("button").addEventListener("click", () => detalje.classList.add("skjul"));
-
-            detalje.querySelector("h3").textContent = person.gsx$navn.$t;
-            detalje.querySelector("h3").textContent += "" + person.gsx$efternavn.$t;
-
-            detalje.querySelector("#detalje_person img").src = person.gsx$billede.$t;
-            detalje.querySelector("#detalje_person img").alt = `Portræt af ${person.gsx$navn.$t}`;
-
-
-
-        }
-
 
         function buttons() {
             document.querySelectorAll(".filter").forEach(elm => {
@@ -198,8 +148,5 @@
             this.classList.add("valgt");
             visPersoner();
         }
-
     </script>
-</body>
-
-</html>
+</body></html>
